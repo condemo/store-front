@@ -1,0 +1,7 @@
+__pycache__/
+.env
+venv/
+*.vim
+.flake8
+todo.md
+data.json
