@@ -1,5 +1,6 @@
 import customtkinter as ctk
-from data import DataLoadCache
+from data.preload import DataLoadCache
+from data.dataloaders import ProductLoader
 from config import DATA_URL
 
 
@@ -10,3 +11,5 @@ class App(ctk.CTk):
         self.title("Store Management")
 
         DataLoadCache(DATA_URL)
+        # TODO: Borrar es test
+        ProductLoader()
