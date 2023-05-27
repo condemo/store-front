@@ -32,7 +32,6 @@ class DataLoadCache:
 
         self.to_json()
 
-    # TODO: Crea un JSON con los datos estructurados.
     def to_json(self) -> None:
         with open(ROOT_DIR + "/data/data.json", "w") as file:
             new_json = {
