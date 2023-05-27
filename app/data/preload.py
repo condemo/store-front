@@ -1,3 +1,4 @@
+import json
 import requests
 from tkinter.messagebox import showerror
 
@@ -34,7 +35,10 @@ class DataLoadCache:
     # TODO: Crea un JSON con los datos estructurados.
     def to_json(self) -> None:
         with open(ROOT_DIR + "/data/data.json", "w") as file:
-            # TODO: Implenetar la funcion para crear un json estructurado
-            pass
-
-    # TODO: Divide los datos en distintos diccionarios que se cargan en las vistas.
+            new_json = {
+                "products": self.products_data,
+                "discounts": self.discounts_data,
+                "orders": self.orders_data,
+                "providers": self.providers_data,
+            }
+            json.dump(new_json, file, indent=4)
