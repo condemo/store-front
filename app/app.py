@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from data.preload import DataLoadCache
-from data.dataloaders import ProductLoader
+from data.dataloaders import ProductCardLoader
 from config import DATA_URL
 
 
@@ -12,4 +12,4 @@ class App(ctk.CTk):
 
         DataLoadCache(DATA_URL)
         # TODO: Borrar es test
-        ProductLoader()
+        ProductCardLoader().get_data_list()
