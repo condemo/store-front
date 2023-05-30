@@ -2,6 +2,7 @@ import customtkinter as ctk
 
 from utils import ViewController
 from products import ProductsView
+from lib import View
 
 
 class MainMenu(ctk.CTkFrame):
@@ -10,17 +11,18 @@ class MainMenu(ctk.CTkFrame):
         self.parent = parent
         self.pack_propagate(False)
         self.menu_btn_frame = ctk.CTkFrame(self, fg_color="transparent")
-
-        # TODO: Implemetar correctamente los botones por separado
-        [ctk.CTkButton(
-            self.menu_btn_frame, text=f"{i+1}", width=40)
-            .pack(pady=5) for i in range(5)]
+        self.load_buttons()
 
         self.menu_btn_frame.pack(expand=True)
 
         self.pack(side="left", fill="y")
-
-        self.load_view()
-
-    def load_view(self) -> None:
         self.view_controller = ViewController(ProductsView(self.parent))
+
+    def load_view(self, view: View) -> None:
+        pass
+
+    def load_buttons(self) -> None:
+        # TODO: Implementar los botones aquí
+        [ctk.CTkButton(
+            self.menu_btn_frame, text=f"{i+1}", width=40)
+            .pack(pady=5) for i in range(5)]
