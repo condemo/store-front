@@ -4,7 +4,6 @@ import json
 from products import ProductMin
 
 
-# TODO: Renombrar este clase mejor ya que devuelve una lista de 10 productos para las tarjetas
 class ProductCardLoader:
     def __init__(self) -> None:
         self.products: list[ProductMin]
