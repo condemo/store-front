@@ -2,7 +2,7 @@ from lib import View
 
 
 class ViewController:
-    def __init__(self, initial_view) -> None:
+    def __init__(self, initial_view: View) -> None:
         self.current_view = initial_view
         self.current_view.show()
 
