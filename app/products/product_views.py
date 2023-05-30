@@ -7,4 +7,8 @@ class ProductsView(ctk.CTkFrame):
         self.parent = parent
         self.pack_propagate(False)
 
-        self.pack(fill="both", expand=True)
+    def show(self) -> None:
+        self.pack(fill="both", expand=True, side="left")
+
+    def remove(self) -> None:
+        self.pack_forget()
