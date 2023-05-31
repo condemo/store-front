@@ -6,7 +6,6 @@ from config import ROOT_DIR
 
 
 class DataLoadCache:
-    # TODO: Fetchea los datos necesatios.
     def __init__(self, url: str) -> None:
         self.products_data = []
         self.discounts_data = []
