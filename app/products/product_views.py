@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from config import TITLE_FONT
+from data.dataloaders import ProductCardLoader
 
 
 class ProductsView(ctk.CTkFrame):
@@ -43,16 +44,19 @@ class ProductsCardsFrame(ctk.CTkFrame):
             self, text="Últimos Productos", font=TITLE_FONT)
 
         self.title.pack(pady=5)
-        # TODO: Remove Test
-        ProductCard(self)
-        ProductCard(self)
-        ProductCard(self)
-        ProductCard(self)
-        ProductCard(self)
-        ProductCard(self)
-        ProductCard(self)
+        self.load_product_cards()
 
         self.pack(side="left", expand=True, fill="both")
+
+    def load_product_cards(self) -> None:
+        self.card_loader = ProductCardLoader()
+        [ProductCard(
+            self,
+            id=i.id,
+            name=i.name,
+            category=i.category,
+            price=i.price,
+        ) for i in self.card_loader.get_data_list()]
 
 
 class ProductInfoFrame(ctk.CTkFrame):
@@ -68,7 +72,7 @@ class ProductInfoFrame(ctk.CTkFrame):
 
 
 class ProductCard(ctk.CTkFrame):
-    def __init__(self, parent) -> None:
+    def __init__(self, parent, id: int, name: str, category: str, price: float) -> None:
         super().__init__(
             master=parent, fg_color="#4f61dd", border_width=2,
             border_color="orange", corner_radius=10)
@@ -80,13 +84,15 @@ class ProductCard(ctk.CTkFrame):
         self.rowconfigure(0, weight=1, uniform="a")
         self.rowconfigure(1, weight=1, uniform="a")
 
+        self.id = id
+
         self.name = ctk.CTkLabel(
-            self, text="Titulo provisorio algo largo x si aca a ver",
+            self, text=f"{name}",
             font=("Roboto", 18))
         self.category = ctk.CTkLabel(
-            self, text="Camisetas",
+            self, text=f"{category}",
             fg_color="transparent", font=("Roboto", 16))
-        self.price = ctk.CTkLabel(self, text="29.99€")
+        self.price = ctk.CTkLabel(self, text=f"{str(price)}€")
         self.info_btn = ctk.CTkButton(self, text="->", fg_color="orange")
 
         self.name.grid(column=0, row=0, rowspan=2)
