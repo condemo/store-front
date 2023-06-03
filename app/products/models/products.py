@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Optional
 from uuid import UUID
 
 from .stock import Stock
@@ -23,7 +24,8 @@ class ProductFull:
     provider_price: float
     brand: Brand
     category: Category
-    discount: Discount
     stock: Stock
     uuid: UUID
     created_at: str
+    discount: Optional[Discount] = None
+    updated_at: Optional[str] = None
