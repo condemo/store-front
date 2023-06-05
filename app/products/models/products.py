@@ -27,5 +27,5 @@ class ProductFull:
     stock: Stock
     uuid: UUID
     created_at: str
-    discount: Optional[Discount] = None
     updated_at: Optional[str] = None
+    discount: Optional[Discount] = None
