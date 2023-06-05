@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from datetime import datetime
 from config import TITLE_FONT
 from data.dataloaders import ProductCardLoader
 from data.datafetchers import product_info_loader
@@ -123,44 +124,134 @@ class ProductCard(ctk.CTkFrame):
 
 class ProductDataFrame(ctk.CTkFrame):
     def __init__(self, parent, product: ProductFull) -> None:
-        super().__init__(master=parent)
+        super().__init__(master=parent, fg_color="transparent")
         self.pack_propagate(False)
-        self.label_list = []
+        self.product = product
+        self.product_values_list = []
+        self.value_color = "yellow"
+        self.text_size = 16
 
-        # TODO: Implementar mejor esta parte el algún momento
-        self.name = ctk.CTkLabel(self, text=f"{product.name}")
-        self.brand = ctk.CTkLabel(self, text=f"{product.brand['name']}")
-        self.category = ctk.CTkLabel(self, text=f"{product.category['name']}")
-        self.price = ctk.CTkLabel(self, text=f"{str(product.price)}€")
-        self.provider_price = ctk.CTkLabel(self, text=f"{str(product.provider_price)}€")
-        self.stock = ctk.CTkLabel(self, text=f"{product.stock['qty']} unidades")
-        if product.discount:
-            self.discount = ctk.CTkLabel(self, text=f"{product.discount['discount_percent']}%")
-            self.discount_status = ctk.CTkLabel(self, text=f"{product.discount['active']}")
+        # TODO: Checkear como reestructurar para Implementar mejor
+        self.data_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.img_frame = ctk.CTkFrame(self, fg_color="transparent")
+
+        # Two Container Frames
+        self.key_frame = ctk.CTkFrame(self.data_frame, fg_color="transparent")
+        self.value_frame = ctk.CTkFrame(self.data_frame, fg_color="transparent")
+
+        self.load_key_values()
+        self.set_data()
+        self.show_data()
+
+        self.key_frame.pack(side="left", fill="both", expand=True)
+        self.value_frame.pack(side="left", expand=True, fill="both")
+        self.data_frame.pack(expand=True, fill="both")
+        self.img_frame.pack(expand=True, fill="both")
+        self.pack(expand=True, fill="both", pady=10)
+
+    def load_key_values(self) -> None:
+        self.name_label = ctk.CTkLabel(
+            self.key_frame, text="Nombre: ",
+            anchor="e", text_color=self.value_color, font=("Roboto", self.text_size))
+        self.brand_label = ctk.CTkLabel(
+            self.key_frame, text="Marca: ",
+            anchor="e", text_color=self.value_color, font=("Roboto", self.text_size))
+        self.category_label = ctk.CTkLabel(
+            self.key_frame, text="Categoria: ",
+            anchor="e", text_color=self.value_color, font=("Roboto", self.text_size))
+        self.price_label = ctk.CTkLabel(
+            self.key_frame, text="Precio: ",
+            anchor="e", text_color=self.value_color, font=("Roboto", self.text_size))
+        self.provider_price_label = ctk.CTkLabel(
+            self.key_frame, text="Precio Proveedor: ",
+            anchor="e", text_color=self.value_color, font=("Roboto", self.text_size))
+        self.stock_label = ctk.CTkLabel(
+            self.key_frame, text="Stock: ",
+            anchor="e", text_color=self.value_color, font=("Roboto", self.text_size))
+        self.discount_label = ctk.CTkLabel(
+            self.key_frame, text="Descuento: ",
+            anchor="e", text_color=self.value_color, font=("Roboto", self.text_size))
+        self.discount_status_label = ctk.CTkLabel(
+            self.key_frame, text="Desc Status: ",
+            anchor="e", text_color=self.value_color, font=("Roboto", self.text_size))
+        self.uuid_label = ctk.CTkLabel(
+            self.key_frame, text="UUID: ",
+            anchor="e", text_color=self.value_color, font=("Roboto", self.text_size))
+        self.created_at_label = ctk.CTkLabel(
+            self.key_frame, text="Fecha de Creación: ",
+            anchor="e", text_color=self.value_color, font=("Roboto", self.text_size))
+        self.updated_at_label = ctk.CTkLabel(
+            self.key_frame, text="Última actualización: ",
+            anchor="e", text_color=self.value_color, font=("Roboto", self.text_size))
+        #
+        self.name_label.pack(fill="x")
+        self.brand_label.pack(fill="x")
+        self.category_label.pack(fill="x")
+        self.price_label.pack(fill="x")
+        self.provider_price_label.pack(fill="x")
+        self.stock_label.pack(fill="x")
+        self.discount_label.pack(fill="x")
+        self.discount_status_label.pack(fill="x")
+        self.uuid_label.pack(fill="x")
+        self.created_at_label.pack(fill="x")
+        self.updated_at_label.pack(fill="x")
+
+    def set_data(self) -> None:
+        # TODO: Implementar mejor, muchas lineas
+        self.name = ctk.CTkLabel(
+            self.value_frame, text=f"{self.product.name}",
+            anchor="w", font=("Roboto", self.text_size))
+        self.brand = ctk.CTkLabel(
+            self.value_frame, text=f"{self.product.brand['name']}",
+            anchor="w", font=("Roboto", self.text_size))
+        self.category = ctk.CTkLabel(
+            self.value_frame, text=f"{self.product.category['name']}",
+            anchor="w", font=("Roboto", self.text_size))
+        self.price = ctk.CTkLabel(
+            self.value_frame, text=f"{str(self.product.price)}€",
+            anchor="w", font=("Roboto", self.text_size))
+        self.provider_price = ctk.CTkLabel(
+            self.value_frame, text=f"{str(self.product.provider_price)}€",
+            anchor="w", font=("Roboto", self.text_size))
+        self.stock = ctk.CTkLabel(
+            self.value_frame, text=f"{self.product.stock['qty']} unidades",
+            anchor="w", font=("Roboto", self.text_size))
+        if self.product.discount:
+            self.discount = ctk.CTkLabel(
+                self.value_frame, text=f"{self.product.discount['discount_percent']}%",
+                anchor="w", font=("Roboto", self.text_size))
+            self.discount_status = ctk.CTkLabel(
+                self.value_frame, text=f"{self.product.discount['active']}",
+                anchor="w", font=("Roboto", self.text_size))
         else:
-            self.discount = ctk.CTkLabel(self, text="No asigado")
-            self.discount_status = ctk.CTkLabel(self, text="")
-        self.uuid = ctk.CTkLabel(self, text=f"{product.uuid}")
-        self.created_at = ctk.CTkLabel(self, text=f"{product.created_at}")
-        if product.updated_at:
-            self.updated_at = ctk.CTkLabel(self, text=f"{product.updated_at}")
+            self.discount = ctk.CTkLabel(self.value_frame, text="No asigado",
+                                         anchor="w", font=("Roboto", self.text_size))
+            self.discount_status = ctk.CTkLabel(self.value_frame, text="",
+                                                anchor="w", font=("Roboto", self.text_size))
+        self.uuid = ctk.CTkLabel(self.value_frame, text=f"{self.product.uuid}",
+                                 anchor="w", font=("Roboto", self.text_size))
+        self.created_at = ctk.CTkLabel(
+            self.value_frame, text=f"{self.product.created_at}",
+            anchor="w", font=("Roboto", self.text_size))
+        if self.product.updated_at:
+            self.updated_at = ctk.CTkLabel(
+                self.value_frame, text=f"{self.product.updated_at}",
+                anchor="w", font=("Roboto", self.text_size))
         else:
-            self.updated_at = ctk.CTkLabel(self, text="Nunca")
+            self.updated_at = ctk.CTkLabel(self.value_frame, text="Nunca",
+                                           anchor="w", font=("Roboto", self.text_size))
 
-        self.label_list.append(self.name)
-        self.label_list.append(self.brand)
-        self.label_list.append(self.category)
-        self.label_list.append(self.price)
-        self.label_list.append(self.provider_price)
-        self.label_list.append(self.stock)
-        self.label_list.append(self.discount)
-        self.label_list.append(self.discount_status)
-        self.label_list.append(self.uuid)
-        self.label_list.append(self.created_at)
-        self.label_list.append(self.updated_at)
+        self.product_values_list.append(self.name)
+        self.product_values_list.append(self.brand)
+        self.product_values_list.append(self.category)
+        self.product_values_list.append(self.price)
+        self.product_values_list.append(self.provider_price)
+        self.product_values_list.append(self.stock)
+        self.product_values_list.append(self.discount)
+        self.product_values_list.append(self.discount_status)
+        self.product_values_list.append(self.uuid)
+        self.product_values_list.append(self.created_at)
+        self.product_values_list.append(self.updated_at)
 
-        self.load_data()
-        self.pack(expand=True, fill="both")
-
-    def load_data(self) -> None:
-        [i.pack() for i in self.label_list]
+    def show_data(self) -> None:
+        [i.pack(fill="x") for i in self.product_values_list]
