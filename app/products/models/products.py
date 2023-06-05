@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional
 from uuid import UUID
+from datetime import datetime
 
 from .stock import Stock
 from .category import Category
@@ -26,6 +27,6 @@ class ProductFull:
     category: Category
     stock: Stock
     uuid: UUID
-    created_at: str
-    updated_at: Optional[str] = None
+    created_at: datetime
+    updated_at: Optional[datetime] = None
     discount: Optional[Discount] = None
