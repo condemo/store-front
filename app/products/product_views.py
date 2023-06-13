@@ -1,5 +1,4 @@
 import customtkinter as ctk
-from datetime import datetime
 from config import TITLE_FONT
 from data.dataloaders import ProductCardLoader
 from data.datafetchers import product_info_loader
@@ -208,10 +207,10 @@ class ProductDataFrame(ctk.CTkFrame):
             self.value_frame, text=f"{self.product.category['name']}",
             anchor="w", font=("Roboto", self.text_size))
         self.price = ctk.CTkLabel(
-            self.value_frame, text=f"{str(self.product.price)}€",
+            self.value_frame, text=f"{self.product.price:.2f}€",
             anchor="w", font=("Roboto", self.text_size))
         self.provider_price = ctk.CTkLabel(
-            self.value_frame, text=f"{str(self.product.provider_price)}€",
+            self.value_frame, text=f"{self.product.provider_price:.2f}€",
             anchor="w", font=("Roboto", self.text_size))
         self.stock = ctk.CTkLabel(
             self.value_frame, text=f"{self.product.stock['qty']} unidades",
