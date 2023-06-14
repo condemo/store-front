@@ -11,6 +11,8 @@ class DataLoadCache:
         self.discounts_data = []
         self.orders_data = []
         self.providers_data = []
+        self.brands_data = []
+        self.categories_data = []
 
         try:
             self.products_data = requests.get(
@@ -21,6 +23,10 @@ class DataLoadCache:
                 f"{url}/providers/orders/?limit=10").json()
             self.providers_data = requests.get(
                 f"{url}/providers/?limit=10").json()
+            self.brands_data = requests.get(
+                f"{url}/products/brands/?limit=50").json()
+            self.categories_data = requests.get(
+                f"{url}/products/category/?limit=50").json()
 
         except requests.exceptions.ConnectionError:
             showerror(
@@ -35,6 +41,8 @@ class DataLoadCache:
         with open(ROOT_DIR + "/data/data.json", "w") as file:
             new_json = {
                 "products": self.products_data,
+                "brands": self.brands_data,
+                "categories": self.categories_data,
                 "discounts": self.discounts_data,
                 "orders": self.orders_data,
                 "providers": self.providers_data,
