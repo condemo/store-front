@@ -30,3 +30,12 @@ class ProductFull:
     created_at: datetime
     updated_at: Optional[datetime] = None
     discount: Optional[Discount] = None
+
+
+@dataclass
+class ProductListed:
+    id: int
+    name: str
+    price: float
+    brand: Brand
+    provider_price: float
