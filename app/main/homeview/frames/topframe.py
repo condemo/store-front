@@ -1,22 +1,6 @@
 import customtkinter as ctk
 
 
-class HomeView(ctk.CTkFrame):
-    def __init__(self, parent) -> None:
-        super().__init__(master=parent)
-        self.parent = parent
-        self.pack_propagate(False)
-
-        self.top_frame = TopHomeFrame(self)
-        self.bottom_frame = BottomHomeView(self)
-
-    def show(self) -> None:
-        self.pack(fill="both", expand=True, side="left")
-
-    def remove(self) -> None:
-        self.pack_forget()
-
-
 class TopHomeFrame(ctk.CTkFrame):
     def __init__(self, parent) -> None:
         super().__init__(master=parent)
@@ -47,11 +31,3 @@ class NextOrders(ctk.CTkFrame):
         self.title = ctk.CTkLabel(self, text="Próximos Pedidos", font=("Roboto", 20))
 
         self.title.pack(pady=5)
-
-
-class BottomHomeView(ctk.CTkFrame):
-    def __init__(self, parent) -> None:
-        super().__init__(master=parent, fg_color="orange")
-        self.pack_propagate(False)
-
-        self.pack(expand=True, fill="both")
