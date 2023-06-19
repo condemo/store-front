@@ -43,13 +43,13 @@ class LastMovementsCard(ctk.CTkFrame):
             "text": "a ver que onda",
             "date": "2023-06-19 23:37"
             }
-        self.type = ctk.CTkLabel(self, text=f"{self.data['event_type']}")
+        self.type = ctk.CTkLabel(self, text=f"{self.data['event_type']}", font=("Roboto", 18))
         self.text = ctk.CTkLabel(self, text=f"{self.data['text']}")
         self.date = ctk.CTkLabel(self, text=f"{self.data['date']}")
 
-        self.type.pack()
+        self.type.pack(pady=3)
         self.text.pack()
-        self.date.pack()
+        self.date.pack(pady=3)
         self.pack(fill="both", padx=5, pady=3, ipady=5)
 
 
@@ -61,11 +61,23 @@ class NextOrders(ctk.CTkFrame):
         self.container = ctk.CTkFrame(self)
 
         self.title.pack(pady=5)
+        self.test_card = NextOrdersCard(self.container)
         self.container.pack(expand=True, fill="both")
 
 
 class NextOrdersCard(ctk.CTkFrame):
     def __init__(self, parent) -> None:
-        super().__init__(master=parent)
+        super().__init__(
+            master=parent, height=80, border_width=3,
+            border_color="blue", corner_radius=10,
+        )
         self.pack_propagate(False)
-        # TODO: Implementar
+
+        self.arrive_date = ctk.CTkLabel(self, text="2023-06-20", font=("Roboto", 18))
+        self.product_count = ctk.CTkLabel(self, text=f"{str(14)} productos")
+        self.provider = ctk.CTkLabel(self, text="Empresa S.A.")
+
+        self.arrive_date.pack(pady=3)
+        self.product_count.pack()
+        self.provider.pack(pady=3)
+        self.pack(fill="both", padx=5, pady=3, ipady=5)
